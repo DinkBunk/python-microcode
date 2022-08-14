@@ -3,37 +3,11 @@ from flask import Flask, render_template, request
 import json
 import time
 import logging
-import pump_delegate
-import valve_delegate
-import routines
-import rg_flask_ui
+import src.views.delegate.pump_delegate as pump_delegate
 from apscheduler.schedulers.background import BackgroundScheduler
 
 scheduler = BackgroundScheduler()
 
-
-def lights_on():
-    pump_delegate.set_pump_state(7, True)
-    pump_delegate.set_pump_state(4, True)
-
-def lights_off():
-    pump_delegate.set_pump_state(7, False)
-    pump_delegate.set_pump_state(4, False)
-
-def feather_stack_pump() :
-    pump_delegate.set_pump_state(2, True)
-    time.sleep(10)
-    pump_delegate.set_pump_state(2, False)
-
-def short_cycle_drainage() :
-    pump_delegate.set_pump_state(3, True)
-    time.sleep(10)
-    pump_delegate.set_pump_state(3, False)
-
-def long_cycle_drainage() :
-    pump_delegate.set_pump_state(3, True)
-    time.sleep(120)
-    pump_delegate.set_pump_state(3, False)
 
 scheduler.add_job(lights_on, 'cron', hour=7)
 scheduler.add_job(lights_off, 'cron', hour=23)
