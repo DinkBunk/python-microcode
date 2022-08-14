@@ -1,0 +1,10 @@
+<div id="rg_status">
+    {{ include "geology_fact.html" }}
+</div>
+<script>
+    const relayStateUrl = {{ url_for("geology_fact")|tojson }}
+    const geology_div = getElementById("geology-fact")
+    fetch(geology_url)
+        .then(response => response.text)
+        .then(text => geology_div.innerHtml = text)
+</script>
